@@ -14,17 +14,19 @@ public class App extends JFrame {
         setTitle("JUG Flashtalk - Java-JS communication");
         setLayout(new BorderLayout());
         add(new TopPanel(model::setText), BorderLayout.PAGE_START);
-        var page = new PagePanel();
-        add(page, BorderLayout.CENTER);
+        var swingPage = new PagePanel();
+        var browserPage = new BroswerPanel();
+        add(new BroswerPanel(), BorderLayout.CENTER);
         pack();
         setSize(400, 200);
 
-        final var subscription = model.getState().subscribe(page);
+        final var subscription = model.getState().subscribe(swingPage);
 
         addWindowStateListener(new WindowAdapter() {
             @Override
             public void windowClosed(WindowEvent e) {
                 subscription.dispose();
+                browserPage.close();
             }
         });
     }

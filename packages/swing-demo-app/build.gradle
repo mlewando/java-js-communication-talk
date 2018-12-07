@@ -5,11 +5,16 @@ plugins {
 
 repositories {
     jcenter()
+    maven {
+        url 'http://maven.teamdev.com/repository/products'
+    }
 }
 
 dependencies {
     compile 'io.reactivex.rxjava2:rxjava:2.2.0'
+    compile 'com.teamdev.jxbrowser:jxbrowser-cross-platform:6.22'
     testImplementation 'junit:junit:4.12'
+    runtime fileTree(dir: 'lib', include: '*.jar')
 }
 
 mainClassName = 'pl.mlewando.jug.flashtalk.java_js_communication.swing_demo_app.App'
