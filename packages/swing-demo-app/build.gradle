@@ -14,6 +14,8 @@ dependencies {
     compile 'io.reactivex.rxjava2:rxjava:2.2.0'
     compile 'com.teamdev.jxbrowser:jxbrowser-cross-platform:6.22'
     compile 'com.fasterxml.jackson.core:jackson-databind:2.9.4'
+    compile 'com.fasterxml.jackson.datatype:jackson-datatype-jdk8:2.9.4'
+    compile 'com.fasterxml.jackson.datatype:jackson-datatype-jsr310:2.9.4'
     testImplementation 'junit:junit:4.12'
     runtime fileTree(dir: 'lib', include: '*.jar')
 }

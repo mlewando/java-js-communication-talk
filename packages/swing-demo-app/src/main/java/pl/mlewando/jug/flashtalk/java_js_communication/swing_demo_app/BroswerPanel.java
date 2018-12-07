@@ -6,6 +6,9 @@ import javax.swing.JPanel;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.databind.SerializationFeature;
+import com.fasterxml.jackson.datatype.jdk8.Jdk8Module;
+import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
 import com.teamdev.jxbrowser.chromium.Browser;
 import com.teamdev.jxbrowser.chromium.swing.BrowserView;
 
@@ -19,9 +22,11 @@ class BroswerPanel extends JPanel {
     private final ObjectMapper objectMapper;
 
     BroswerPanel() {
-        objectMapper = new ObjectMapper();
+        objectMapper = new ObjectMapper().registerModule(new Jdk8Module()).registerModule(new JavaTimeModule());
         browser = new Browser();
         var view = new BrowserView(browser);
+
+        objectMapper.configure(SerializationFeature.WRITE_DATES_AS_TIMESTAMPS, false);
 
         setLayout(new BorderLayout());
         add(view, BorderLayout.CENTER);
