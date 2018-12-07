@@ -9,3 +9,8 @@ export function javaEventStream<T>(name: string): Observable<T> {
     streams[name] = streams[name] || new Subject();
     return streams[name];
 }
+
+export function sendToJava(name: string): (value: object) => void {
+    return (value: object) =>
+        (window as any).jsEvent(name, JSON.stringify(value));
+}

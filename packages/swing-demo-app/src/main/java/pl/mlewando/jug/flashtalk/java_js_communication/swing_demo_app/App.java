@@ -22,10 +22,14 @@ public class App extends JFrame {
         add(browserPage, BorderLayout.CENTER);
 
         pack();
-        setSize(400, 200);
+        setSize(400, 400);
 
         final var subscription = new CompositeDisposable(model.getState().subscribe(swingPage),
-                model.getState().subscribe(browserPage.sendToJs("state")));
+                model.getState().subscribe(browserPage.sendToJs("state")),
+                browserPage.getJsEventStream("state", ApplicationState.class).subscribe(state -> {
+                    System.out.println(state.toString());
+                    model.setText(state.getText());
+                }));
 
         addWindowStateListener(new WindowAdapter() {
             @Override
