@@ -1,11 +1,11 @@
-document.getElementById("root").innerHTML = "OK, it works";
+import { map } from "rxjs/operators";
 
-(window as any).javaEvent = (name: string, event: any) => {
-    document.getElementById(
-        "root"
-    ).innerHTML = `<p>${name}:<br /><pre>${JSON.stringify(
-        event,
-        undefined,
-        4
-    )}</pre></p>`;
-};
+import { javaEventStream } from "./javaEventStream";
+
+const rootElement = document.getElementById("root");
+javaEventStream("state")
+    .pipe(
+        map(state => JSON.stringify(state, undefined, 4)),
+        map(state => `<p>state:<br\><pre>${state}</pre></p>`)
+    )
+    .subscribe(state => (rootElement.innerHTML = state));
