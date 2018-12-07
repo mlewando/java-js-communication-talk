@@ -1,0 +1,15 @@
+plugins {
+    id 'java'
+    id 'application'
+}
+
+repositories {
+    jcenter()
+}
+
+dependencies {
+    compile 'io.reactivex.rxjava2:rxjava:2.2.0'
+    testImplementation 'junit:junit:4.12'
+}
+
+mainClassName = 'pl.mlewando.jug.flashtalk.java_js_communication.swing_demo_app.App'
