@@ -6,6 +6,8 @@ import java.awt.event.WindowEvent;
 
 import javax.swing.JFrame;
 
+import io.reactivex.disposables.CompositeDisposable;
+
 public class App extends JFrame {
 
     private static final long serialVersionUID = 1L;
@@ -14,13 +16,16 @@ public class App extends JFrame {
         setTitle("JUG Flashtalk - Java-JS communication");
         setLayout(new BorderLayout());
         add(new TopPanel(model::setText), BorderLayout.PAGE_START);
+
         var swingPage = new PagePanel();
         var browserPage = new BroswerPanel();
-        add(new BroswerPanel(), BorderLayout.CENTER);
+        add(browserPage, BorderLayout.CENTER);
+
         pack();
         setSize(400, 200);
 
-        final var subscription = model.getState().subscribe(swingPage);
+        final var subscription = new CompositeDisposable(model.getState().subscribe(swingPage),
+                model.getState().subscribe(browserPage.sendToJs("state")));
 
         addWindowStateListener(new WindowAdapter() {
             @Override

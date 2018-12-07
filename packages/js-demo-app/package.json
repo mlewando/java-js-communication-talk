@@ -1,0 +1,23 @@
+{
+    "name": "@mlewando/jug-flashtalk-java-js-communication-js-demo-app",
+    "version": "1.0.0",
+    "description": "Demo application for java-js communication talk",
+    "main": "index.js",
+    "scripts": {
+        "start": "parcel src/index.html"
+    },
+    "repository": {
+        "type": "git",
+        "url": "git+https://github.com/mlewando/java-js-communication-talk.git"
+    },
+    "author": "Mateusz Lewandowski",
+    "license": "MIT",
+    "bugs": {
+        "url": "https://github.com/mlewando/java-js-communication-talk/issues"
+    },
+    "homepage": "https://github.com/mlewando/java-js-communication-talk#readme",
+    "devDependencies": {
+        "parcel-bundler": "^1.10.3",
+        "typescript": "^3.2.2"
+    }
+}
