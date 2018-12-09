@@ -19,17 +19,12 @@ public class App extends JFrame {
 
         var swingPage = new PagePanel();
         var browserPage = new BroswerPanel();
-        add(browserPage, BorderLayout.CENTER);
+        add(swingPage, BorderLayout.CENTER);
 
         pack();
         setSize(400, 400);
 
-        final var subscription = new CompositeDisposable(model.getState().subscribe(swingPage),
-                model.getState().subscribe(browserPage.sendToJs("state")),
-                browserPage.getJsEventStream("state", ApplicationState.class).subscribe(state -> {
-                    System.out.println(state.toString());
-                    model.setText(state.getText());
-                }));
+        final var subscription = new CompositeDisposable(model.getState().subscribe(swingPage));
 
         addWindowStateListener(new WindowAdapter() {
             @Override
@@ -38,10 +33,6 @@ public class App extends JFrame {
                 browserPage.close();
             }
         });
-    }
-
-    public String getGreeting() {
-        return "Hello world.";
     }
 
     public static void main(String[] args) {

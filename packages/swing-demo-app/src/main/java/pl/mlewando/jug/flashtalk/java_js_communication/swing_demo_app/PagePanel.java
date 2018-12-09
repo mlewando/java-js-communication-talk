@@ -9,7 +9,7 @@ import javax.swing.SwingConstants;
 
 import io.reactivex.functions.Consumer;
 
-public class PagePanel extends JPanel implements Consumer<ApplicationState> {
+class PagePanel extends JPanel implements Consumer<ApplicationState> {
 
     private static final long serialVersionUID = 1L;
 

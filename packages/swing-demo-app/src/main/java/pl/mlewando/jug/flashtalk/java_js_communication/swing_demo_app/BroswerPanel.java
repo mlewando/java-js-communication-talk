@@ -27,7 +27,6 @@ class BroswerPanel extends JPanel {
 
     private final Browser browser;
     private final ObjectMapper objectMapper;
-    private final Subject<JsEvent> jsEvents = PublishSubject.create();
 
     BroswerPanel() {
         objectMapper = new ObjectMapper().registerModule(new Jdk8Module()).registerModule(new JavaTimeModule());
@@ -39,20 +38,6 @@ class BroswerPanel extends JPanel {
         setLayout(new BorderLayout());
         add(view, BorderLayout.CENTER);
 
-        browser.addScriptContextListener(new ScriptContextAdapter() {
-            @Override
-            public void onScriptContextCreated(ScriptContextEvent event) {
-                getWindowObject().asObject().setProperty("jsEvent", new JSFunctionCallback() {
-
-                    @Override
-                    public Object invoke(Object... params) {
-                        handleJsEvent((String) params[0], (String) params[1]);
-                        return null;
-                    }
-                });
-            }
-        });
-
         browser.loadURL("http://localhost:1234");
     }
 
@@ -60,24 +45,7 @@ class BroswerPanel extends JPanel {
         browser.dispose();
     }
 
-    <T> Consumer<T> sendToJs(String streamName) {
-        return event -> browser.executeJavaScript(getJsEventCode(streamName, event));
-    }
-
-    <T> Observable<T> getJsEventStream(String name, Class<T> type) {
-        return jsEvents.filter(e -> name.equals(e.getName())).map(JsEvent::getJsonPayload)
-                .map(json -> objectMapper.readValue(json, type));
-    }
-
-    private void handleJsEvent(String name, String json) {
-        jsEvents.onNext(new JsEvent(name, json));
-    }
-
     private JSValue getWindowObject() {
         return browser.executeJavaScriptAndReturnValue(browser.getJSContext().getFrameId(), "window");
-    }
-
-    private <T> String getJsEventCode(String streamName, T event) throws JsonProcessingException {
-        return String.format("window.javaEvent(\"%s\", %s)", streamName, objectMapper.writeValueAsString(event));
     }
 }
