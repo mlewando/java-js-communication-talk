@@ -1,0 +1,317 @@
+import { Appear, Image } from "mdx-deck";
+import { hack as theme } from "mdx-deck/themes";
+import { Box, Flex } from "rebass";
+
+import SvgArrow from "./components/SvgArrow";
+import SvgBox from "./components/SvgBox";
+
+export { theme };
+
+# Agenda
+
+1. coś o sobie
+2. trochę o projekcie -> czyli mamy clienta java
+3. swing - WTF???
+4. Java po stronie klienta - kto to wymyślil???
+5. webView - w sensie ze nie ma problemu?
+6. SPA
+7. ale apka i logika jest w javie - co teraz?
+8. webView (i inne przeglądarki) mają api do wstrzykiwania JSa i nasuchiwania na eventy
+9. live coding - kindoff
+10. są problemy - cakiem sporo, czy chcecie posluchac?
+
+---
+
+<Box style={{ textAlign: "right" }}>
+    <h3>Mateusz Lewandowski</h3>
+</Box>
+
+<Appear>
+    <h1>~9 lat doświadczenia</h1>
+    <Flex flexWrap="wrap" alignItems="center">
+        <Box style={{ textAlign: "center" }} width={1 / 3}>
+            Java
+        </Box>
+        <Box style={{ textAlign: "center" }} width={1 / 3}>
+            JavaScript
+        </Box>
+        <Box style={{ textAlign: "center" }} width={1 / 3}>
+            PHP
+        </Box>
+        <Box style={{ textAlign: "center" }} width={1 / 3}>
+            C#
+        </Box>
+        <Box style={{ textAlign: "center" }} width={1 / 3}>
+            C/C++
+        </Box>
+        <Box style={{ textAlign: "center" }} width={1 / 3}>
+            Haskel
+        </Box>
+    </Flex>
+</Appear>
+
+```notes
+dużo języków
+```
+
+---
+
+<div style={{ position: "relative" }}>
+    <Appear>
+        <img
+            src="./resources/moto-1.jpg"
+            style={{
+                width: "50%",
+                transform: "rotateZ(20deg)"
+            }}
+        />
+        <img
+            src="./resources/moto-2.jpg"
+            style={{
+                width: "50%",
+                transform: "rotateZ(-10deg)",
+                position: "absolute",
+                top: "0%",
+                left: "50%"
+            }}
+        />
+        <img
+            src="./resources/wspinaczka.jpg"
+            style={{
+                height: "150%",
+                transform: "rotateZ(5deg)",
+                position: "absolute",
+                top: "-10%",
+                left: "40%"
+            }}
+        />
+        <img
+            src="./resources/wspinaczka-2.jpg"
+            style={{
+                width: "50%",
+                transform: "rotateZ(-15deg)",
+                position: "absolute",
+                top: "20%",
+                left: "5%"
+            }}
+        />
+        <img
+            src="./resources/gra.jpg"
+            style={{
+                width: "35%",
+                transform: "rotateZ(-5deg)",
+                position: "absolute",
+                top: "80%",
+                left: "65%"
+            }}
+        />
+    </Appear>
+</div>
+
+---
+
+# How to embed JS UI in Java client application
+
+### JS <-> Java communication
+
+```notes
+
+```
+
+---
+
+<React.Fragment>
+    <Image src="./resources/black-hole.jpg" />
+    <Flex
+        alignItems="center"
+        justifyContent="space-between"
+        style={{ position: "absolute", top: 0, width: "100%", height: "100%" }}
+    >
+        <Box m="10%">
+            <img style={{ width: "70%" }} src="./resources/duke.png" />
+        </Box>
+        <Box m="10%">
+            <img
+                align="right"
+                style={{ width: "70%" }}
+                src="./resources/js.png"
+            />
+        </Box>
+    </Flex>
+</React.Fragment>
+
+```notes
+Jak tak naprawdę połączyć dwa światy?
+```
+
+---
+
+# Mój obecny projekt
+
+<Flex flexWrap="wrap" alignItems="center" style={{ maxWidth: 1050 }}>
+    <Appear>
+        <Box width={1 / 2}>Java 6</Box>
+        <Box width={1 / 2}>Monolit</Box>
+        <Box width={1 / 2}>Swing</Box>
+        <Box width={1 / 2}>RMI</Box>
+        <Box width={1}>Logika biznesowa pomieszana z warstwą widoku</Box>
+        <Box width={1}>Jak i z wywołaniammi RMI</Box>
+    </Appear>
+</Flex>
+
+```notes
+Aplikacja kliencka
+UI w swingu
+komunikacja po RMI
+duuuużo kodu
+
+prowadzący na studiach twierdził że Java się nie nadaje do aplikacji klienckich aż do...
+```
+
+---
+
+# WebView
+
+```notes
+można było wreszcie w "Javowej" aplikacji pisać normalne UI
+
+tylko u nas mieliśmy już sporo logiki w Javie
+tego się nie da tak po prostu przepisać
+tym bardziej że nie mamy normalnego API na serwerze
+```
+
+---
+
+# SPA w WebView
+
+<ul>
+    <Appear>
+        <li>logika zostaje w Javie (na razie)</li>
+        <li>za prezentacje odpowiada SPA wyświetlana w WebView</li>
+    </Appear>
+</ul>
+
+```notes
+Dla tego wymyśliliśmy podejście hybrydowe
+zostawimy w Javie to co ma sens w javie - logikę biznesową
+widok idzie do JSa (Single page application)
+
+To wprowadziło dodatkowy problem...
+jak synchronizować stan (bo niestety cała aplikacja kliencka chciał nie chiał jest stanowa)
+```
+
+---
+
+# SPA musi być bezstanowa
+
+<Appear>
+    <small>na tyle, na ile się da...</small>
+</Appear>
+
+```notes
+rozwiązanie - nie synchronizować
+stan ma być po stronie javy - tylko
+
+no, na tyle na ile się da
+```
+
+---
+
+# Message driven
+
+<svg
+    version="1.1"
+    xmlns="http://www.w3.org/2000/svg"
+    width="100%"
+    viewBox="0 0 700 250"
+>
+    <g transform="translate(0, 50)">
+        <Appear>
+            <g>
+                <SvgBox y="0" w="240" h="200">
+                    Java Model
+                </SvgBox>
+                <SvgBox x="460" y="0" w="240" h="200">
+                    JS View
+                </SvgBox>
+            </g>
+            <SvgArrow path="M240,50, L460,50" x={(460 - 240) / 2 + 240} y="30">
+                view state
+            </SvgArrow>
+            <SvgArrow
+                path="M460,150, L240,150"
+                x={(460 - 240) / 2 + 240}
+                y="170"
+            >
+                action
+            </SvgArrow>
+            <image
+                href="./resources/redux.png"
+                width="250"
+                height="250"
+                x={(700 - 250) / 2}
+                y="-50"
+            />
+        </Appear>
+    </g>
+</svg>
+
+```notes
+Mamy na szczęście w programowaniu obiektowym coś co się nazwywa "message driven architecture"
+
+takie musi być połączenie pomiędzy UI a logiką biznesową - u nas to oznacza refactoring
+
+model jest odpowiedzialny za udostępnienie obiektu (idealnie niemutowalnego) ze stanem
+widok na podstawie tylko i wyłącznie aktualnego stanu wyświetla UI
+
+interakcje z UI powodują tworzenie obiektów-akcji (również niemutowalnych) które są wysyłane do modelu
+
+do tego idelnie nadaje się biblioteka RxJava
+```
+
+---
+
+<img src="./resources/rx.png" />
+
+```notes
+RxJava ma swój odpowiednik/pierwowzór w RxJs
+
+możemy więc używać "tej samej" biblioteki po obu stronach - w Javie i w JS
+
+to teraz info - jak 
+idziemy do kodu
+```
+
+---
+
+---
+
+## Problemy
+
+<ul>
+    <Appear>
+        <li>routing</li>
+        <li>multithreading</li>
+        <li>synchronizacja stanu</li>
+        <li>message driven</li>
+    </Appear>
+</ul>
+
+```notes
+nie jest to droga bez problemów
+
+w javie porzełączanie się pomiędzy ekranami jest imperatywne i zawsze takie będzie, w js deklaratywne
+utrudnia to stopniowy refactoring
+
+mutithreading - przeglądarka to osobny proces
+
+bezstanowość w JS, message driven - czasami nie da się tego w 100% osiągnąć (niedostateczny refactoring) - wtedy dzieją się nieprzyjemne żeczy
+```
+
+---
+
+# Q&A
+
+---
+
+# Dziękuję

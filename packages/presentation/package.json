@@ -1,0 +1,15 @@
+{
+    "name": "@mlewando/jug-flashtalk-java-js-communicatio",
+    "version": "1.0.0",
+    "description": "Java-JS communication 15' talk",
+    "main": "index.js",
+    "scripts": {
+        "start": "mdx-deck index.mdx"
+    },
+    "author": "Mateusz Lewandowski",
+    "license": "MIT",
+    "dependencies": {
+        "mdx-deck": "^1.8.2",
+        "rebass": "^3.0.0-12"
+    }
+}
