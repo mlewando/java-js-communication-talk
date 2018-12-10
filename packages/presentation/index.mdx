@@ -4,23 +4,10 @@ import { Box, Flex } from "rebass";
 
 import SvgArrow from "./components/SvgArrow";
 import SvgBox from "./components/SvgBox";
+import Step from "./components/Step";
+import WebView from "./components/WebView";
 
 export { theme };
-
-# Agenda
-
-1. coś o sobie
-2. trochę o projekcie -> czyli mamy clienta java
-3. swing - WTF???
-4. Java po stronie klienta - kto to wymyślil???
-5. webView - w sensie ze nie ma problemu?
-6. SPA
-7. ale apka i logika jest w javie - co teraz?
-8. webView (i inne przeglądarki) mają api do wstrzykiwania JSa i nasuchiwania na eventy
-9. live coding - kindoff
-10. są problemy - cakiem sporo, czy chcecie posluchac?
-
----
 
 <Box style={{ textAlign: "right" }}>
     <h3>Mateusz Lewandowski</h3>
@@ -155,7 +142,7 @@ Jak tak naprawdę połączyć dwa światy?
         <Box width={1 / 2}>Swing</Box>
         <Box width={1 / 2}>RMI</Box>
         <Box width={1}>Logika biznesowa pomieszana z warstwą widoku</Box>
-        <Box width={1}>Jak i z wywołaniammi RMI</Box>
+        <Box width={1}>Jak i z wywołaniami RMI</Box>
     </Appear>
 </Flex>
 
@@ -170,7 +157,7 @@ prowadzący na studiach twierdził że Java się nie nadaje do aplikacji klienck
 
 ---
 
-# WebView
+<WebView />
 
 ```notes
 można było wreszcie w "Javowej" aplikacji pisać normalne UI
@@ -195,8 +182,15 @@ tym bardziej że nie mamy normalnego API na serwerze
 Dla tego wymyśliliśmy podejście hybrydowe
 zostawimy w Javie to co ma sens w javie - logikę biznesową
 widok idzie do JSa (Single page application)
+```
 
-To wprowadziło dodatkowy problem...
+---
+
+# Stopniowa migracja
+
+```notes
+To dało możliwość refactoringu po kolei
+ale wprowadziło dodatkowy problem...
 jak synchronizować stan (bo niestety cała aplikacja kliencka chciał nie chiał jest stanowa)
 ```
 
@@ -217,7 +211,7 @@ no, na tyle na ile się da
 
 ---
 
-# Message driven
+# Event driven
 
 <svg
     version="1.1"
@@ -226,7 +220,7 @@ no, na tyle na ile się da
     viewBox="0 0 700 250"
 >
     <g transform="translate(0, 50)">
-        <Appear>
+        <Step step={1}>
             <g>
                 <SvgBox y="0" w="240" h="200">
                     Java Model
@@ -235,9 +229,13 @@ no, na tyle na ile się da
                     JS View
                 </SvgBox>
             </g>
+        </Step>
+        <Step step={2}>
             <SvgArrow path="M240,50, L460,50" x={(460 - 240) / 2 + 240} y="30">
                 view state
             </SvgArrow>
+        </Step>
+        <Step step={3}>
             <SvgArrow
                 path="M460,150, L240,150"
                 x={(460 - 240) / 2 + 240}
@@ -245,6 +243,8 @@ no, na tyle na ile się da
             >
                 action
             </SvgArrow>
+        </Step>
+        <Step step={4} exact={true}>
             <image
                 href="./resources/redux.png"
                 width="250"
@@ -252,7 +252,7 @@ no, na tyle na ile się da
                 x={(700 - 250) / 2}
                 y="-50"
             />
-        </Appear>
+        </Step>
     </g>
 </svg>
 
@@ -278,11 +278,41 @@ RxJava ma swój odpowiednik/pierwowzór w RxJs
 
 możemy więc używać "tej samej" biblioteki po obu stronach - w Javie i w JS
 
-to teraz info - jak 
+to teraz info - jak
 idziemy do kodu
 ```
 
 ---
+
+# Event driven
+
+<svg
+    version="1.1"
+    xmlns="http://www.w3.org/2000/svg"
+    width="100%"
+    viewBox="0 0 700 250"
+>
+    <g transform="translate(0, 50)">
+        <g>
+            <SvgBox y="0" w="240" h="200">
+                Java Model
+            </SvgBox>
+            <SvgBox x="460" y="0" w="240" h="200">
+                JS View
+            </SvgBox>
+        </g>
+        <SvgArrow path="M240,50, L460,50" x={(460 - 240) / 2 + 240} y="30">
+            view state
+        </SvgArrow>
+        <SvgArrow path="M460,150, L240,150" x={(460 - 240) / 2 + 240} y="170">
+            action
+        </SvgArrow>
+    </g>
+</svg>
+
+---
+
+<img src="./resources/show-me-the-code.jpg" />
 
 ---
 
@@ -314,4 +344,4 @@ bezstanowość w JS, message driven - czasami nie da się tego w 100% osiągną�
 
 ---
 
-# Dziękuję
+# Dziękuję za uwagę
