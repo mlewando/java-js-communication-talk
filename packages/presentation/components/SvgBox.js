@@ -3,6 +3,7 @@ import styled from "styled-components";
 
 const Box = styled.rect`
     stroke-width: 2;
+    fill: transparent;
     stroke: ${props => props.theme.colors.text};
 `;
 const Text = styled.text`
