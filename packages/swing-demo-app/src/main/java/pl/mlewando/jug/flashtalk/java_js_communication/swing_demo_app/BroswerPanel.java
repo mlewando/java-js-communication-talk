@@ -29,11 +29,15 @@ class BroswerPanel extends JPanel {
     private final ObjectMapper objectMapper;
 
     BroswerPanel() {
-        objectMapper = new ObjectMapper().registerModule(new Jdk8Module()).registerModule(new JavaTimeModule());
+        objectMapper = new ObjectMapper()
+                .registerModule(new Jdk8Module())
+                .registerModule(new JavaTimeModule());
         browser = new Browser();
         var view = new BrowserView(browser);
 
-        objectMapper.configure(SerializationFeature.WRITE_DATES_AS_TIMESTAMPS, false);
+        objectMapper.configure(
+                SerializationFeature.WRITE_DATES_AS_TIMESTAMPS,
+                false);
 
         setLayout(new BorderLayout());
         add(view, BorderLayout.CENTER);
@@ -46,6 +50,8 @@ class BroswerPanel extends JPanel {
     }
 
     private JSValue getWindowObject() {
-        return browser.executeJavaScriptAndReturnValue(browser.getJSContext().getFrameId(), "window");
+        return browser.executeJavaScriptAndReturnValue(
+                browser.getJSContext().getFrameId(),
+                "window");
     }
 }

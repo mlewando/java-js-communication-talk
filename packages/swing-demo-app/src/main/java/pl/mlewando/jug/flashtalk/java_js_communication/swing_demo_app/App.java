@@ -13,9 +13,11 @@ public class App extends JFrame {
     private static final long serialVersionUID = 1L;
 
     App(ApplicationModel model) {
-        setTitle("JUG Flashtalk - Java-JS communication");
+        setTitle(
+                "JUG Flashtalk - Java-JS communication");
         setLayout(new BorderLayout());
-        add(new TopPanel(model::setText), BorderLayout.PAGE_START);
+        add(new TopPanel(model::setText),
+                BorderLayout.PAGE_START);
 
         var swingPage = new PagePanel();
         var browserPage = new BroswerPanel();
@@ -24,7 +26,8 @@ public class App extends JFrame {
         pack();
         setSize(400, 400);
 
-        final var subscription = new CompositeDisposable(model.getState().subscribe(swingPage));
+        final var subscription = new CompositeDisposable(
+                model.getState().subscribe(swingPage));
 
         addWindowStateListener(new WindowAdapter() {
             @Override
@@ -37,7 +40,8 @@ public class App extends JFrame {
 
     public static void main(String[] args) {
         var app = new App(new ApplicationModel());
-        app.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        app.setDefaultCloseOperation(
+                JFrame.EXIT_ON_CLOSE);
         app.setVisible(true);
     }
 }
