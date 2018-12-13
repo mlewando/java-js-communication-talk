@@ -21,14 +21,14 @@ import io.reactivex.functions.Consumer;
 import io.reactivex.subjects.PublishSubject;
 import io.reactivex.subjects.Subject;
 
-class BroswerPanel extends JPanel {
+class BrowserPanel extends JPanel {
 
     private static final long serialVersionUID = 1L;
 
     private final Browser browser;
     private final ObjectMapper objectMapper;
 
-    BroswerPanel() {
+    BrowserPanel() {
         objectMapper = new ObjectMapper()
                 .registerModule(new Jdk8Module())
                 .registerModule(new JavaTimeModule());

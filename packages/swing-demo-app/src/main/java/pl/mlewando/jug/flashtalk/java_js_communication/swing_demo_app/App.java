@@ -20,7 +20,7 @@ public class App extends JFrame {
                 BorderLayout.PAGE_START);
 
         var swingPage = new PagePanel();
-        var browserPage = new BroswerPanel();
+        var browserPage = new BrowserPanel();
         add(swingPage, BorderLayout.CENTER);
 
         pack();

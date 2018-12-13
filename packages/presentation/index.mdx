@@ -174,11 +174,12 @@ tym bardziej że nie mamy normalnego API na serwerze
 
 # SPA w WebView
 
+<Step step={1} exact={true}>
+<img style={{width: "50%", position: 'absolute', top: '20%'}} src="./resources/spa.jpg" />
+</Step>
 <ul>
-    <Appear>
-        <li>logika zostaje w Javie (na razie)</li>
-        <li>za prezentacje odpowiada SPA wyświetlana w WebView</li>
-    </Appear>
+        <Step step={3}><li>logika zostaje w Javie (na razie)</li></Step>
+        <Step step={4}><li>za prezentacje odpowiada SPA wyświetlana w WebView</li></Step>
 </ul>
 
 ```notes
@@ -254,15 +255,6 @@ no, na tyle na ile się da
             >
                 action
             </SvgArrow>
-        </Step>
-        <Step step={4} exact={true}>
-            <image
-                href="./resources/redux.png"
-                width="250"
-                height="250"
-                x={(700 - 250) / 2}
-                y="-50"
-            />
         </Step>
     </g>
 </svg>
@@ -351,12 +343,6 @@ bezstanowość w JS, message driven - czasami nie da się tego w 100% osiągną�
 ---
 
 # Q&A
-
----
-
-https://github.com/mlewando/java-js-communication-talk.git
-
-<img src="./resources/githubQrCode-reverse.svg" width="40%" align="right" />
 
 ---
 
