@@ -21,13 +21,14 @@ public class App extends JFrame {
 
         var swingPage = new PagePanel();
         var browserPage = new BrowserPanel();
-        add(swingPage, BorderLayout.CENTER);
+        add(browserPage, BorderLayout.CENTER);
 
         pack();
         setSize(400, 400);
 
         final var subscription = new CompositeDisposable(
-                model.getState().subscribe(swingPage));
+                model.getState().subscribe(browserPage
+                        .sendToJs("state")));
 
         addWindowStateListener(new WindowAdapter() {
             @Override

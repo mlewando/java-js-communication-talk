@@ -45,6 +45,16 @@ class BrowserPanel extends JPanel {
         browser.loadURL("http://localhost:1234");
     }
 
+    <T> Consumer<T> sendToJs(String streamName) {
+        return event -> browser
+                .executeJavaScript(String.format(
+                        "window.javaEvent(\"%s\", %s)",
+                        streamName,
+                        objectMapper
+                                .writeValueAsString(
+                                        event)));
+    }
+
     void close() {
         browser.dispose();
     }
