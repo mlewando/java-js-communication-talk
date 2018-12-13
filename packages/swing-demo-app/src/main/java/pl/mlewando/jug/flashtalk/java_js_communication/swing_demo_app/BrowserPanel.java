@@ -14,6 +14,7 @@ import com.teamdev.jxbrowser.chromium.JSFunctionCallback;
 import com.teamdev.jxbrowser.chromium.JSValue;
 import com.teamdev.jxbrowser.chromium.events.ScriptContextAdapter;
 import com.teamdev.jxbrowser.chromium.events.ScriptContextEvent;
+import com.teamdev.jxbrowser.chromium.events.ScriptContextListener;
 import com.teamdev.jxbrowser.chromium.swing.BrowserView;
 
 import io.reactivex.Observable;
@@ -27,6 +28,8 @@ class BrowserPanel extends JPanel {
 
     private final Browser browser;
     private final ObjectMapper objectMapper;
+    private final Subject<JsEvent> jsEvents = PublishSubject
+            .create();
 
     BrowserPanel() {
         objectMapper = new ObjectMapper()
@@ -42,6 +45,29 @@ class BrowserPanel extends JPanel {
         setLayout(new BorderLayout());
         add(view, BorderLayout.CENTER);
 
+        browser.addScriptContextListener(
+                new ScriptContextAdapter() {
+
+                    @Override
+                    public void onScriptContextCreated(
+                            ScriptContextEvent arg0) {
+                        getWindowObject().asObject()
+                                .setProperty("jsEvent",
+                                        new JSFunctionCallback() {
+
+                                            @Override
+                                            public Object invoke(
+                                                    Object... params) {
+                                                jsEvents.onNext(
+                                                        new JsEvent(
+                                                                (String) params[0],
+                                                                (String) params[1]));
+                                                return null;
+                                            }
+                                        });
+                    }
+                });
+
         browser.loadURL("http://localhost:1234");
     }
 
@@ -53,6 +79,16 @@ class BrowserPanel extends JPanel {
                         objectMapper
                                 .writeValueAsString(
                                         event)));
+    }
+
+    <T> Observable<T> getJsEvents(String streamName,
+            Class<T> type) {
+        return jsEvents
+                .filter(event -> event.getName()
+                        .equals(streamName))
+                .map(JsEvent::getJsonPayload)
+                .map(json -> objectMapper
+                        .readValue(json, type));
     }
 
     void close() {

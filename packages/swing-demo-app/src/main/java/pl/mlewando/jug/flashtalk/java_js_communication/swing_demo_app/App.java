@@ -28,7 +28,11 @@ public class App extends JFrame {
 
         final var subscription = new CompositeDisposable(
                 model.getState().subscribe(browserPage
-                        .sendToJs("state")));
+                        .sendToJs("state")),
+                browserPage
+                        .getJsEvents("text",
+                                String.class)
+                        .subscribe(model::setText));
 
         addWindowStateListener(new WindowAdapter() {
             @Override

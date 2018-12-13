@@ -16,3 +16,7 @@ export function getJavaEvents<T>(streamName: string): Observable<T> {
         map(javaEvent => javaEvent.event)
     );
 }
+
+export function sendToJava<T>(streamName: string): (event: T) => void {
+    return event => (window as any).jsEvent(streamName, JSON.stringify(event));
+}
